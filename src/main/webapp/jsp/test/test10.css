@@ -1,21 +1,28 @@
 @charset "UTF-8";
 
-#wrap{
+#wrap {
 	width:1200px;
-	height:800px;
+	margin:0 auto;
 }
 
-header{
-	width:1200px;
-	heigth:100px;
-}
-
-section{
-	width:1200px;
-	height:600px;
-}
-
-footer{
-	width:1200px;
+header > .logo {
+	width:200px;
 	height:100px;
+}
+
+header > .search {
+	width:1000px;
+	height:100px;
+}
+
+.main-menu {
+	height:40px;
+}
+
+.contents {
+	height:500px;
+}
+
+footer {
+	height:50px;
 }
