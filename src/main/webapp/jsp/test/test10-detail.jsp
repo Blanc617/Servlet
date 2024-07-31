@@ -83,7 +83,15 @@
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
     
-    int targetId = Integer.parseInt(request.getParameter("id"));
+	String idString = request.getParameter("id");
+	String title = request.getParameter("title");
+	
+	int targetId = 0;
+	if(idString != null){
+		targetId = Integer.parseInt(idString);
+	}
+	
+	
 %>
 
 	<div id="wrap">
@@ -115,7 +123,11 @@
 			
 			<% for(Map<String, Object> music:musicList) { 
 				int id = (Integer)music.get("id");
-				if(targetId == id) {
+				
+				// id가 전달되면 id가 일치하는 경우
+				// title이 전달이 되면 title이 일치하는 경우
+				
+				if((targetId != 0 && id == targetId) || (title != null && title.equals(music.get("title")))){ 
 			%>
 			
 			<div class="artist d-flex  border border-success p-3">
