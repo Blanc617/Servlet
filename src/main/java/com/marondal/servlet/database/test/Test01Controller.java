@@ -1,4 +1,4 @@
-package com.marondal.servlet.database.ex;
+package com.marondal.servlet.database.test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,40 +13,37 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.marondal.servlet.common.MysqlService;
 
-@WebServlet("/db/ex/ex02")
-public class Ex02Controller extends HttpServlet {
+@WebServlet("/db/test/test01")
+public class Test01Controller extends HttpServlet {
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
 		response.setContentType("text/plain");
 		
 		PrintWriter out = response.getWriter();
 		
 		MysqlService mysqlService = MysqlService.getInstance();
-		// 접속
 		mysqlService.connect();
 		
-		List<Map<String, Object>> resultList = mysqlService.select("SELECT * FROM `used_goods`");
+		List<Map<String, Object>> resultList = mysqlService.select("SELECT `address`, `area`, `type` FROM `real_estate` ORDER BY `id` DESC LIMIT 10;");
 		
 		for(Map<String, Object> resultMap:resultList) {
 			
-			String title = (String)resultMap.get("title");
-			int price = (Integer)resultMap.get("price");
+			String address = (String)resultMap.get("address");
+			int area = (Integer)resultMap.get("area");
+			String type = (String)resultMap.get("type");
 			
-			out.println("제목 : " + title + " 가격 : " + price);
+			out.println("매물 주소 : " + address + ", 면적 : " + area + ", 타입 : " + type);
 		}
 		
-		String query = "INSERT INTO `used_goods`\r\n"
-				+ "(`sellerId`, `title`, `price`, `description`)\r\n"
-				+ "VALUE\r\n"
-				+ "(3, '고양이 간식 팝니다', 2000, '안먹어서 팔아요');";
+		String query = "INSERT INTO `real_estate`\r\n"
+				+ "(`realtorId`, `address`, `area`, `type`, `price`)\r\n"
+				+ "VALUE \r\n"
+				+ "(3,	'헤라펠리스 101동 5305호', 350, '매매', 1500000);";
 		
 		int count = mysqlService.update(query);
 		
-		out.println("삽입 결과 : " + count);
-		
-		
+		out.println("삽입 개수 : " + count);
 		
 	}
 
